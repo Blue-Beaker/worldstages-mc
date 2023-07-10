@@ -1,0 +1,8 @@
+{
+    "java.import.gradle.java.home": "/usr/lib/jvm/java-8-openjdk-amd64",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.import.gradle.home": "",
+    "java.import.gradle.user.home": "/mnt/G/Minecraft/.gradle_forge112",
+    "java.maven.downloadSources": true
+}

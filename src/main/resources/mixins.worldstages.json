@@ -1,0 +1,17 @@
+{
+    "required": true,
+    "compatibilityLevel": "JAVA_8",
+    "package": "io.bluebeaker.worldstages.mixin",
+    "mixins": [
+      "MixinWorld",
+      "MixinWorldServer"
+    ],
+    "client": [
+    ],
+    "server": [
+    ],
+    "injectors": {
+      "defaultRequire": 1
+    },
+    "refmap": "mixins.worldstages.refmap.json"
+  }

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "worldstages",
+  "name": "World Stages",
+  "description": "Stages blocks, tileentities and entities, stops them from functioning without certain stages",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Blue_Beaker"],
+  "credits": "",
+  "logoFile": "banner.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
