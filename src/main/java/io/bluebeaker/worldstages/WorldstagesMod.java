@@ -5,7 +5,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
 
 import org.apache.logging.log4j.Logger;
 
@@ -31,12 +33,13 @@ public class WorldstagesMod {
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+    }
+    @EventHandler
+    public void onWorldLoad(FMLServerAboutToStartEvent event){
         ConfigStorage.instance.load();
-        logger.info(ConfigStorage.instance.blacklistedTileEntityIDs.toString());
-        logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 
-    public static void log(String message) {
+    public static void logInfo(String message) {
         logger.info(message);
     }
 }

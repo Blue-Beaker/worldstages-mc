@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.bluebeaker.worldstages.ConfigStorage;
+import io.bluebeaker.worldstages.WorldStorage;
 import io.bluebeaker.worldstages.WorldstagesMod;
 
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,8 +21,8 @@ public abstract class MixinBlock {
     @Inject(method = "updateTick", at=@At("HEAD"),cancellable = true)
     private void updateTick(World world, BlockPos pos, IBlockState state, Random random,CallbackInfo ci){
         ResourceLocation id= state.getBlock().getRegistryName();
-        if(id!=null && ConfigStorage.instance.blacklistedBlockIDs.contains(id.toString())){
-            WorldstagesMod.log(id.toString());
+        if(id!=null && WorldStorage.instance.checkBlockDisabled(id.toString())){
+            WorldstagesMod.logInfo(id.toString());
             ci.cancel();
         }
     }

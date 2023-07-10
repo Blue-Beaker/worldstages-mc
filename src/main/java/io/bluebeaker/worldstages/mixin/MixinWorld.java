@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.bluebeaker.worldstages.ConfigStorage;
+import io.bluebeaker.worldstages.WorldStorage;
 import io.bluebeaker.worldstages.WorldstagesMod;
 
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,20 +30,20 @@ public abstract class MixinWorld {
         List<TileEntity> tileEntitiesToRemove = new ArrayList<TileEntity>();
         for(TileEntity te : ((World)(Object)this).tickableTileEntities){
             ResourceLocation blockID=TileEntity.getKey(te.getClass());
-            if(blockID!=null && ConfigStorage.instance.blacklistedTileEntityIDs.contains(blockID.toString())){
+            if(blockID!=null && WorldStorage.instance.checkBlockDisabled(blockID.toString())){
                 tileEntitiesToRemove.add(te);
             }
         }
         for(TileEntity te:tileEntitiesToRemove){
             ((World)(Object)this).tickableTileEntities.remove(te);
-            WorldstagesMod.log(String.valueOf(TileEntity.getKey(te.getClass())));
+            WorldstagesMod.logInfo(String.valueOf(TileEntity.getKey(te.getClass())));
         }
     }
     @Redirect(method = "immediateBlockTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;updateTick(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V"))
     private void immediateBlockTick(Block block,World world,BlockPos pos,IBlockState state,Random random) {
         ResourceLocation id= block.getRegistryName();
-        if(id!=null && ConfigStorage.instance.blacklistedBlockIDs.contains(id.toString())){
-            WorldstagesMod.log(id.toString());
+        if(id!=null && WorldStorage.instance.checkBlockDisabled(id.toString())){
+            WorldstagesMod.logInfo(id.toString());
         }else{
             block.updateTick(world, pos, state, random);
         }
