@@ -13,15 +13,15 @@ import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 
-@Mod(modid = WorldstagesMod.MODID, name = WorldstagesMod.NAME, version = WorldstagesMod.VERSION)
-public class WorldstagesMod {
+@Mod(modid = WorldStagesMod.MODID, name = WorldStagesMod.NAME, version = WorldStagesMod.VERSION)
+public class WorldStagesMod {
     public static final String MODID = "worldstages";
     public static final String NAME = "World Stages";
     public static final String VERSION = "1.0";
 
     private static Logger logger;
 
-    public WorldstagesMod() {
+    public WorldStagesMod() {
         MinecraftForge.EVENT_BUS.register(this);
     }
 

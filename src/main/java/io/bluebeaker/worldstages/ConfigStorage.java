@@ -18,20 +18,20 @@ public class ConfigStorage {
             if(split.length==2){
                 BlockStages.put(split[0].trim(), split[1].trim());
             }else{
-                WorldstagesMod.logInfo("[ERROR] Staged Blocks entry not splitted correctly:\n\t"+item);
+                WorldStagesMod.logInfo("[ERROR] Staged Blocks entry not splitted correctly:\n\t"+item);
             }
         }
 
-        WorldstagesMod.logInfo("Loaded Block Stages: "+ConfigStorage.instance.BlockStages.toString());
+        WorldStagesMod.logInfo("Loaded Block Stages: "+ConfigStorage.instance.BlockStages.toString());
         TileEntityStages.clear();
         for(String item:WorldStagesConfig.stagedTileEntities){
             String[] split=item.split("=",2);
             if(split.length==2){
                 TileEntityStages.put(split[0].trim(), split[1].trim());
             }else{
-                WorldstagesMod.logInfo("[ERROR] Staged TileEntities entry not splitted correctly:\n\t"+item);
+                WorldStagesMod.logInfo("[ERROR] Staged TileEntities entry not splitted correctly:\n\t"+item);
             }
         }
-        WorldstagesMod.logInfo("Loaded TileEntity Stages: "+ConfigStorage.instance.TileEntityStages.toString());
+        WorldStagesMod.logInfo("Loaded TileEntity Stages: "+ConfigStorage.instance.TileEntityStages.toString());
     }
 }
