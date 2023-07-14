@@ -1,17 +1,13 @@
 package io.bluebeaker.worldstages;
 
-import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
 
 import org.apache.logging.log4j.Logger;
-
-// The value here should match an entry in the META-INF/mods.toml file
 
 @Mod(modid = WorldStagesMod.MODID, name = WorldStagesMod.NAME, version = WorldStagesMod.VERSION)
 public class WorldStagesMod {
@@ -38,7 +34,6 @@ public class WorldStagesMod {
     public void onWorldLoad(FMLServerAboutToStartEvent event){
         ConfigStorage.instance.load();
     }
-
     public static void logInfo(String message) {
         logger.info(message);
     }

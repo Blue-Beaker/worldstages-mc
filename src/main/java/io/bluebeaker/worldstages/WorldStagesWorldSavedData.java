@@ -43,9 +43,9 @@ public class WorldStagesWorldSavedData extends WorldSavedData {
         stages.forEach((value) -> {
             stagesNBT.appendTag(new NBTTagString(value));
         });
-        NBTTagCompound tags = new NBTTagCompound();
-        tags.setTag(DATA_NAME, stagesNBT);
-        return tags;
+        compound.setTag(DATA_NAME, stagesNBT);
+        WorldStagesMod.logInfo("Saving data:"+compound.toString());
+        return compound;
     }
 
     public static WorldStagesWorldSavedData get(World world) {
@@ -53,11 +53,20 @@ public class WorldStagesWorldSavedData extends WorldSavedData {
         if(storage==null){return null;}
         WorldStagesWorldSavedData instance = (WorldStagesWorldSavedData) storage.getOrLoadData(WorldStagesWorldSavedData.class,
                 DATA_NAME);
-
         if (instance == null) {
+            WorldStagesMod.logInfo("Creating new saved data");
             instance = new WorldStagesWorldSavedData();
             storage.setData(DATA_NAME, instance);
         }
         return instance;
+    }
+
+    public void addStage(String stage){
+        stages.add(stage);
+        this.markDirty();
+    }
+    public void removeStage(String stage){
+        stages.remove(stage);
+        this.markDirty();
     }
 }

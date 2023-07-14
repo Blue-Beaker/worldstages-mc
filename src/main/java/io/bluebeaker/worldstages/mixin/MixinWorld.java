@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import io.bluebeaker.worldstages.WorldStorageChecker;
+import io.bluebeaker.worldstages.StageChecker;
 import io.bluebeaker.worldstages.WorldStagesMod;
 
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,13 +25,13 @@ import net.minecraft.world.World;
 
 @Mixin(World.class)
 public abstract class MixinWorld {
-    // @Inject(method = "updateEntities", at = @At(value = "HEAD"))
+    //Prevents updating disabled blocks
     @Inject(method = "updateEntities", at = @At(value = "INVOKE", target = "Ljava/util/List;iterator()Ljava/util/Iterator;"))
-    private void updateTick(CallbackInfo ci) {
+    private void disableTick(CallbackInfo ci) {
         List<TileEntity> tileEntitiesToRemove = new ArrayList<TileEntity>();
         for(TileEntity te : ((World)(Object)this).tickableTileEntities){
             ResourceLocation blockID=TileEntity.getKey(te.getClass());
-            if(blockID!=null && WorldStorageChecker.instance.checkTileEntityDisabled(((World)(Object)this),blockID.toString())){
+            if(blockID!=null && StageChecker.instance.checkTileEntityDisabled(((World)(Object)this),blockID.toString())){
                 tileEntitiesToRemove.add(te);
             }
         }
@@ -40,22 +40,25 @@ public abstract class MixinWorld {
             WorldStagesMod.logInfo(String.valueOf(TileEntity.getKey(te.getClass())));
         }
     }
+    //Prevents activating disabled blocks
     @Inject(method = "getRedstonePower(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;)I",at=@At("HEAD"),cancellable = true)
-    private void getRedstonePower(BlockPos pos, EnumFacing facing,CallbackInfoReturnable<Integer> cir){
-        if(WorldStorageChecker.instance.checkBlockDisabled(((World)(Object)this), pos)){
+    private void disableRedstonePower(BlockPos pos, EnumFacing facing,CallbackInfoReturnable<Integer> cir){
+        if(StageChecker.instance.checkBlockDisabled(((World)(Object)this), pos)){
             cir.setReturnValue(0);
         }
     }
-    @Inject(method = "neighborChanged",at=@At("HEAD"),cancellable = true)
-    private void blockNeighborChanged(BlockPos pos, final Block blockIn, BlockPos fromPos,CallbackInfo ci){
-        if(WorldStorageChecker.instance.checkBlockDisabled(((World)(Object)this), pos) || WorldStorageChecker.instance.checkBlockDisabled(((World)(Object)this), fromPos)){
-            ci.cancel();
+    //Prevents reading redstone from disabled blocks
+    @Inject(method = "isBlockPowered(Lnet/minecraft/util/math/BlockPos;)Z",at=@At("HEAD"),cancellable = true)
+    private void disableBlockPowered(BlockPos pos,CallbackInfoReturnable<Boolean> cir){
+        if(StageChecker.instance.checkBlockDisabled(((World)(Object)this), pos)){
+            cir.setReturnValue(false);
         }
     }
+    //Prevents updating disabled blocks
     @Redirect(method = "immediateBlockTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;updateTick(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V"))
     private void immediateBlockTick(Block block,World world,BlockPos pos,IBlockState state,Random random) {
         ResourceLocation id= block.getRegistryName();
-        if(id!=null && WorldStorageChecker.instance.checkBlockDisabled(((World)(Object)this),id.toString())){
+        if(id!=null && StageChecker.instance.checkBlockDisabled(((World)(Object)this),id.toString())){
             WorldStagesMod.logInfo(id.toString());
         }else{
             block.updateTick(world, pos, state, random);

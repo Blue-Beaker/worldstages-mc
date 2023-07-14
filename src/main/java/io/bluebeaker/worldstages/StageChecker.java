@@ -8,11 +8,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class WorldStorageChecker {
-    public static final WorldStorageChecker instance = new WorldStorageChecker();
+public class StageChecker {
+    public static final StageChecker instance = new StageChecker();
     public static HashSet<String> stages = new HashSet<String>();
     public boolean checkStageActive(World world,String stage){
-        return stage==null || WorldStagesWorldSavedData.get(world).stages.contains(stage) || world.getGameRules().getInt("teststage")>0;
+        return stage==null || WorldStagesWorldSavedData.get(world).stages.contains(stage);
     }
     public boolean checkBlockDisabled(World world,String BlockID){
         return !checkStageActive(world,ConfigStorage.instance.BlockStages.get(BlockID));
@@ -32,18 +32,4 @@ public class WorldStorageChecker {
     public boolean checkTileEntityDisabled(World world,TileEntity tileEntity){
         return checkTileEntityDisabled(world, String.valueOf(TileEntity.getKey(tileEntity.getClass())));
     }
-
-    // public boolean checkStageActive(String stage){
-    //     if(WorldStagesWorldSavedData.instance==null){
-    //         return stage==null;
-    //     }else{
-    //         return stage==null || WorldStagesWorldSavedData.instance.stages.contains(stage);
-    //     }
-    // }
-    // public boolean checkBlockDisabled(Block block){
-    //     return !checkStageActive(String.valueOf(block.getRegistryName()));
-    // }
-    // public boolean checkBlockStateDisabled(IBlockState state){
-    //     return checkBlockDisabled(state.getBlock());
-    // }
 }

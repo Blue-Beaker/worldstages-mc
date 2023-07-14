@@ -3,6 +3,7 @@
     "compatibilityLevel": "JAVA_8",
     "package": "io.bluebeaker.worldstages.mixin",
     "mixins": [
+      "MixinPistonBase",
       "MixinWorld",
       "MixinWorldServer"
     ],
