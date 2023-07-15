@@ -1,6 +1,6 @@
 config.stagedTileentities.name=Staged TileEntities
 config.stagedBlocks.name=Staged Blocks
-commands.worldstage.usage=/worldstage <add|remove|list> <string stage>
+commands.worldstage.usage=/worldstage <add|+|remove|rm|-|list|ls|reload> ...
 
 commands.worldstage.add.usage=/worldstage add <string stage>
 commands.worldstage.add.error.exists=Stage '%s' is already active

@@ -1,6 +1,7 @@
 package io.bluebeaker.worldstages;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -71,6 +72,10 @@ public class WorldStagesCommand extends CommandTreeBase {
                 @Nullable BlockPos targetPos) {
             return new ArrayList<String>(ConfigStorage.instance.RegisteredStages);
         }
+        @Override
+        public List<String> getAliases() {
+            return Arrays.<String>asList("enable","+");
+        }
     }
 
     public static class CommandRemove extends CommandBase {
@@ -106,6 +111,11 @@ public class WorldStagesCommand extends CommandTreeBase {
                 @Nullable BlockPos targetPos) {
             return new ArrayList<String>(WorldStagesWorldSavedData.get(server.getWorld(0)).stages);
         }
+
+        @Override
+        public List<String> getAliases() {
+            return Arrays.<String>asList("disable","rm","-");
+        }
     }
 
     public static class CommandList extends CommandBase {
@@ -128,6 +138,10 @@ public class WorldStagesCommand extends CommandTreeBase {
             } else {
                 throw new WrongUsageException(getUsage(sender));
             }
+        }
+        @Override
+        public List<String> getAliases() {
+            return Arrays.<String>asList("ls");
         }
     }
 
