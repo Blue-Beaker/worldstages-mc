@@ -11,6 +11,7 @@ import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
 public class BlockEvents {
     @SubscribeEvent
     public static void disableLeftInteraction(LeftClickBlock event){
+        if(event.getWorld().isRemote) return;
         if(WorldStagesConfig.blockConfig.disableLeftInteraction&& StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
             event.getEntityPlayer().sendStatusMessage(new TextComponentTranslation("message.worldstage.blockdisabled"),true);
             event.setCanceled(true);
@@ -18,6 +19,7 @@ public class BlockEvents {
     }
     @SubscribeEvent
     public static void disableRightInteraction(RightClickBlock event){
+        if(event.getWorld().isRemote) return;
         if(WorldStagesConfig.blockConfig.disableRightInteraction&&StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
             event.getEntityPlayer().sendStatusMessage(new TextComponentTranslation("message.worldstage.blockdisabled"),true);
             event.setCanceled(true);
