@@ -7,7 +7,7 @@ import net.minecraftforge.common.config.Config.Type;
 
 @Config(modid = WorldStagesMod.MODID,type = Type.INSTANCE,category = "general")
 public class WorldStagesConfig {
-    @Comment("Staged Blocks and their stages.\nFormat: modid:tileentity_id=stage_name\nA §9/worldstages reload§r or server restart is needed for these lists to take effect.")
+    @Comment("Staged Blocks and their stages.\nFormat: modid:tileentity_id=stage_name")
     @LangKey("config.stagedBlocks.name")
     public static String[] stagedBlocks = new String[0];
 
