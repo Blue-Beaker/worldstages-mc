@@ -6,6 +6,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
 
 public class BlockEvents {
@@ -13,16 +14,14 @@ public class BlockEvents {
     public static void disableLeftInteraction(LeftClickBlock event){
         if(event.getWorld().isRemote) return;
         if(WorldStagesConfig.blockConfig.disableLeftInteraction&& StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
-            event.getEntityPlayer().sendStatusMessage(new TextComponentTranslation("message.worldstage.blockdisabled"),true);
-            event.setCanceled(true);
+            event.setUseBlock(Result.DENY);
         }
     }
     @SubscribeEvent
     public static void disableRightInteraction(RightClickBlock event){
         if(event.getWorld().isRemote) return;
         if(WorldStagesConfig.blockConfig.disableRightInteraction&&StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
-            event.getEntityPlayer().sendStatusMessage(new TextComponentTranslation("message.worldstage.blockdisabled"),true);
-            event.setCanceled(true);
+            event.setUseBlock(Result.DENY);
         }
     }
     @SubscribeEvent

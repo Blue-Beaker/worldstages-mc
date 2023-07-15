@@ -28,11 +28,11 @@ public class WorldStagesConfig {
         @LangKey("config.disableUpdates.name")
         public boolean disableUpdates = true;
 
-        @Comment("The block can't be left-clicked, including mining.")
+        @Comment("The block can't be interact with redstone.")
         @LangKey("config.disableRedstoneInteraction.name")
         public boolean disableRedstoneInteraction = true;
 
-        @Comment("The block can't be left-clicked, including mining.")
+        @Comment("The block can't be left-clicked.")
         @LangKey("config.disableLeftInteraction.name")
         public boolean disableLeftInteraction = true;
 
