@@ -7,6 +7,7 @@ public class ConfigStorage {
 
     public HashMap<String,String> TileEntityStages = new HashMap<String,String>(64);
     public HashMap<String,String> BlockStages = new HashMap<String,String>(64);
+    public HashMap<String,String> ModStages = new HashMap<String,String>(64);
     public HashSet<String> RegisteredStages = new HashSet<String>(16);
     public static final ConfigStorage instance = new ConfigStorage();
 
@@ -36,5 +37,17 @@ public class ConfigStorage {
             }
         }
         WorldStagesMod.logInfo("Loaded TileEntity Stages: "+ConfigStorage.instance.TileEntityStages.toString());
+
+        ModStages.clear();
+        for(String item:WorldStagesConfig.stagedMods){
+            String[] split=item.split("=",2);
+            if(split.length==2){
+                ModStages.put(split[0].trim(), split[1].trim());
+                RegisteredStages.add(split[1].trim());
+            }else{
+                WorldStagesMod.logInfo("[ERROR] Staged mods entry not splitted correctly:\n\t"+item);
+            }
+        }
+        WorldStagesMod.logInfo("Loaded Mod Stages: "+ConfigStorage.instance.ModStages.toString());
     }
 }

@@ -32,7 +32,7 @@ public abstract class MixinWorld {
         List<TileEntity> tileEntitiesToRemove = new ArrayList<TileEntity>();
         for(TileEntity te : ((World)(Object)this).tickableTileEntities){
             ResourceLocation blockID=TileEntity.getKey(te.getClass());
-            if(blockID!=null && StageChecker.instance.checkTileEntityDisabled(((World)(Object)this),blockID.toString())){
+            if(blockID!=null && StageChecker.instance.checkTileEntityDisabled(((World)(Object)this),blockID)){
                 tileEntitiesToRemove.add(te);
             }
         }
@@ -60,7 +60,7 @@ public abstract class MixinWorld {
     private void immediateBlockTick(Block block,World world,BlockPos pos,IBlockState state,Random random) {
         if(!WorldStagesConfig.blockConfig.disableUpdates) return;
         ResourceLocation id= block.getRegistryName();
-        if(id!=null && StageChecker.instance.checkBlockDisabled(((World)(Object)this),id.toString())){
+        if(id!=null && StageChecker.instance.checkBlockDisabled(((World)(Object)this),id)){
             WorldStagesMod.logInfo(id.toString());
         }else{
             block.updateTick(world, pos, state, random);

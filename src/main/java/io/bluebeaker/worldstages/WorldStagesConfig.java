@@ -15,6 +15,10 @@ public class WorldStagesConfig {
     @LangKey("config.stagedTileentities.name")
     public static String[] stagedTileEntities = new String[0];
 
+    @Comment("Staged Mods and their stages.\nThis locks all blocks, tileentities and entities from that mod behind the stage.\nFormat: modid=stage_name")
+    @LangKey("config.stagedMods.name")
+    public static String[] stagedMods = new String[0];
+
     public static BlockConfig blockConfig = new BlockConfig();
 
     @LangKey("category.blockconfig.name")
