@@ -1,2 +1,17 @@
 config.stagedTileentities.name=Staged TileEntities
 config.stagedBlocks.name=Staged Blocks
+commands.worldstage.usage=/worldstage <add|remove|list> <string stage>
+
+commands.worldstage.add.usage=/worldstage add <string stage>
+commands.worldstage.add.error.exists=Stage '%s' is already active
+commands.worldstage.add.success=Activated worldstage '%s'
+
+commands.worldstage.remove.usage=/worldstage remove <string stage>
+commands.worldstage.remove.error.notfound=Cannot find stage '%s'
+commands.worldstage.remove.success=Removed worldstage '%s'
+
+commands.worldstage.list.usage=/worldstage list
+commands.worldstage.list.result=Active worldstages: %s, Registered worldstages: %s
+
+commands.worldstage.reload.usage=/worldstage reload
+commands.worldstage.reload.result=Reloaded config with %s staged blocks and %s staged tileentities

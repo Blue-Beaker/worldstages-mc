@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 import org.apache.logging.log4j.Logger;
 
@@ -30,10 +30,14 @@ public class WorldStagesMod {
     public void init(FMLInitializationEvent event)
     {
     }
+
     @EventHandler
-    public void onWorldLoad(FMLServerAboutToStartEvent event){
+    public void onServerStarted(FMLServerStartingEvent event)
+    {
         ConfigStorage.instance.load();
+        event.registerServerCommand(new WorldStagesCommand());
     }
+    
     public static void logInfo(String message) {
         logger.info(message);
     }

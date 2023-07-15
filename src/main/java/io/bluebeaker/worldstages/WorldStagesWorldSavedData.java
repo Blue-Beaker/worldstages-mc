@@ -11,7 +11,6 @@ import net.minecraft.world.storage.WorldSavedData;
 
 public class WorldStagesWorldSavedData extends WorldSavedData {
     private static final String DATA_NAME = WorldStagesMod.MODID + "_active_stages";
-    // public static WorldStagesWorldSavedData instance;
     public HashSet<String> stages = new HashSet<String>();
 
     public WorldStagesWorldSavedData() {
@@ -20,6 +19,10 @@ public class WorldStagesWorldSavedData extends WorldSavedData {
 
     public WorldStagesWorldSavedData(String s) {
         super(s);
+    }
+
+    public boolean isStageActive(String stage){
+        return stages.contains(stage);
     }
 
     @Override

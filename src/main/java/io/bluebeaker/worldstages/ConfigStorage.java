@@ -1,33 +1,36 @@
 package io.bluebeaker.worldstages;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class ConfigStorage {
 
-    public HashMap<String,String> TileEntityStages = new HashMap<String,String>();
-    public HashMap<String,String> BlockStages = new HashMap<String,String>();
-
+    public HashMap<String,String> TileEntityStages = new HashMap<String,String>(64);
+    public HashMap<String,String> BlockStages = new HashMap<String,String>(64);
+    public HashSet<String> RegisteredStages = new HashSet<String>(16);
     public static final ConfigStorage instance = new ConfigStorage();
 
     public void load(){
+        RegisteredStages.clear();
+        
         BlockStages.clear();
         for(String item:WorldStagesConfig.stagedBlocks){
             String[] split=item.split("=",2);
             if(split.length==2){
                 BlockStages.put(split[0].trim(), split[1].trim());
+                RegisteredStages.add(split[1].trim());
             }else{
                 WorldStagesMod.logInfo("[ERROR] Staged Blocks entry not splitted correctly:\n\t"+item);
             }
         }
-
         WorldStagesMod.logInfo("Loaded Block Stages: "+ConfigStorage.instance.BlockStages.toString());
+
         TileEntityStages.clear();
         for(String item:WorldStagesConfig.stagedTileEntities){
             String[] split=item.split("=",2);
             if(split.length==2){
                 TileEntityStages.put(split[0].trim(), split[1].trim());
+                RegisteredStages.add(split[1].trim());
             }else{
                 WorldStagesMod.logInfo("[ERROR] Staged TileEntities entry not splitted correctly:\n\t"+item);
             }
