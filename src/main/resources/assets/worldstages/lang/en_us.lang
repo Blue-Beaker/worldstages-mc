@@ -15,3 +15,5 @@ commands.worldstage.list.result=Active worldstages: %s, Registered worldstages: 
 
 commands.worldstage.reload.usage=/worldstage reload
 commands.worldstage.reload.result=Reloaded config with %s staged blocks and %s staged tileentities
+
+message.worldstage.blockdisabled=§cThis block is disabled at this stage!§r

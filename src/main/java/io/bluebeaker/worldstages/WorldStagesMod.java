@@ -6,7 +6,6 @@ import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -23,16 +22,12 @@ public class WorldStagesMod {
 
     public WorldStagesMod() {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(BlockEvents.class);
     }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
-    }
-
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
     }
 
     @SubscribeEvent

@@ -57,7 +57,6 @@ public class WorldStagesWorldSavedData extends WorldSavedData {
         WorldStagesWorldSavedData instance = (WorldStagesWorldSavedData) storage.getOrLoadData(WorldStagesWorldSavedData.class,
                 DATA_NAME);
         if (instance == null) {
-            WorldStagesMod.logInfo("Creating new saved data");
             instance = new WorldStagesWorldSavedData();
             storage.setData(DATA_NAME, instance);
         }

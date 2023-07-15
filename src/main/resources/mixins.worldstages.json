@@ -5,6 +5,7 @@
     "mixins": [
       "MixinPistonBase",
       "MixinWorld",
+      "MixinEntity",
       "MixinWorldServer"
     ],
     "client": [
