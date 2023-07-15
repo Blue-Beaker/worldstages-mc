@@ -5,6 +5,7 @@ import java.util.Random;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import io.bluebeaker.worldstages.StageChecker;
+import io.bluebeaker.worldstages.WorldStagesConfig;
 import io.bluebeaker.worldstages.WorldStagesMod;
 
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +21,7 @@ import net.minecraft.world.WorldServer;
 public class MixinWorldServer {
     @Redirect(method = "updateBlockTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;updateTick(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V"))
     private void updateBlockTick(Block block,World world,BlockPos pos,IBlockState state,Random random) {
+        if(!WorldStagesConfig.blockConfig.disableUpdates) return;
         ResourceLocation id= block.getRegistryName();
         if(id!=null && StageChecker.instance.checkBlockDisabled(world,id.toString())){
             WorldStagesMod.logInfo(id.toString());
@@ -29,6 +31,7 @@ public class MixinWorldServer {
     }
     @Redirect(method = "tickUpdates", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;updateTick(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V"))
     private void tickUpdates(Block block,World world,BlockPos pos,IBlockState state,Random random) {
+        if(!WorldStagesConfig.blockConfig.disableUpdates) return;
         ResourceLocation id= block.getRegistryName();
         if(id!=null && StageChecker.instance.checkBlockDisabled(world,id.toString())){
             WorldStagesMod.logInfo(id.toString());

@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import io.bluebeaker.worldstages.StageChecker;
+import io.bluebeaker.worldstages.WorldStagesConfig;
 import io.bluebeaker.worldstages.WorldStagesMod;
 
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,20 +44,21 @@ public abstract class MixinWorld {
     //Prevents activating disabled blocks
     @Inject(method = "getRedstonePower(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;)I",at=@At("HEAD"),cancellable = true)
     private void disableRedstonePower(BlockPos pos, EnumFacing facing,CallbackInfoReturnable<Integer> cir){
-        if(StageChecker.instance.checkBlockDisabled(((World)(Object)this), pos)){
+        if(WorldStagesConfig.blockConfig.disableRedstoneInteraction&&StageChecker.instance.checkBlockDisabled(((World)(Object)this), pos)){
             cir.setReturnValue(0);
         }
     }
     //Prevents reading redstone from disabled blocks
     @Inject(method = "isBlockPowered(Lnet/minecraft/util/math/BlockPos;)Z",at=@At("HEAD"),cancellable = true)
     private void disableBlockPowered(BlockPos pos,CallbackInfoReturnable<Boolean> cir){
-        if(StageChecker.instance.checkBlockDisabled(((World)(Object)this), pos)){
+        if(WorldStagesConfig.blockConfig.disableRedstoneInteraction&&StageChecker.instance.checkBlockDisabled(((World)(Object)this), pos)){
             cir.setReturnValue(false);
         }
     }
     //Prevents updating disabled blocks
     @Redirect(method = "immediateBlockTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;updateTick(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V"))
     private void immediateBlockTick(Block block,World world,BlockPos pos,IBlockState state,Random random) {
+        if(!WorldStagesConfig.blockConfig.disableUpdates) return;
         ResourceLocation id= block.getRegistryName();
         if(id!=null && StageChecker.instance.checkBlockDisabled(((World)(Object)this),id.toString())){
             WorldStagesMod.logInfo(id.toString());

@@ -11,21 +11,21 @@ import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
 public class BlockEvents {
     @SubscribeEvent
     public static void disableLeftInteraction(LeftClickBlock event){
-        if(StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
+        if(WorldStagesConfig.blockConfig.disableLeftInteraction&& StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
             event.getEntityPlayer().sendStatusMessage(new TextComponentTranslation("message.worldstage.blockdisabled"),true);
             event.setCanceled(true);
         }
     }
     @SubscribeEvent
     public static void disableRightInteraction(RightClickBlock event){
-        if(StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
+        if(WorldStagesConfig.blockConfig.disableRightInteraction&&StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
             event.getEntityPlayer().sendStatusMessage(new TextComponentTranslation("message.worldstage.blockdisabled"),true);
             event.setCanceled(true);
         }
     }
     @SubscribeEvent
     public static void disablePlacement(EntityPlaceEvent event){
-        if(StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
+        if(WorldStagesConfig.blockConfig.disablePlacement&&StageChecker.instance.checkBlockDisabled(event.getWorld(), event.getPos())){
             Entity entity=event.getEntity();
             if(entity instanceof EntityPlayer){
                 ((EntityPlayer)entity).sendStatusMessage(new TextComponentTranslation("message.worldstage.blockdisabled"),true);

@@ -17,3 +17,11 @@ commands.worldstage.reload.usage=/worldstage reload
 commands.worldstage.reload.result=Reloaded config with %s staged blocks and %s staged tileentities
 
 message.worldstage.blockdisabled=§cThis block is disabled at this stage!§r
+
+config.disableLeftInteraction.name=Disable Left-click Interaction
+config.disableRightInteraction.name=Disable Right-click Interaction
+config.disablePlacement.name=Disable Block Placement
+config.disableEntityInteraction.name=Disable Entity Interaction
+config.disableRedstoneInteraction.name=Disable Redstone Interaction
+config.disableUpdates.name=Disable Block Updates
+category.blockconfig.name=Config for Disabled Blocks
