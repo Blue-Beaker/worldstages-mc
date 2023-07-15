@@ -70,7 +70,9 @@ public class WorldStagesCommand extends CommandTreeBase {
         @Override
         public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
                 @Nullable BlockPos targetPos) {
-            return new ArrayList<String>(ConfigStorage.instance.RegisteredStages);
+            List<String> list= new ArrayList<String>(ConfigStorage.instance.RegisteredStages);
+            list.removeAll(WorldStagesWorldSavedData.get(server.getWorld(0)).stages);
+            return list;
         }
         @Override
         public List<String> getAliases() {
