@@ -21,6 +21,10 @@ public class WorldStagesConfig {
 
     public static BlockConfig blockConfig = new BlockConfig();
 
+    @Comment("Register additional stages here for addons to use.\nFormat: stage_name")
+    @LangKey("config.additionalStages.name")
+    public static String[] additionalStages = new String[0];
+
     @LangKey("category.blockconfig.name")
     public static class BlockConfig{
 

@@ -14,6 +14,10 @@ public class ConfigStorage {
     public void load(){
         RegisteredStages.clear();
         
+        for(String item:WorldStagesConfig.additionalStages){
+            RegisteredStages.add(item);
+        }
+
         BlockStages.clear();
         for(String item:WorldStagesConfig.stagedBlocks){
             String[] split=item.split("=",2);

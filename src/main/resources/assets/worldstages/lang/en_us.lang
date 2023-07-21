@@ -1,6 +1,7 @@
 config.stagedTileentities.name=Staged TileEntities
 config.stagedBlocks.name=Staged Blocks
 config.stagedMods.name=Staged Mods
+config.additionalStages.name=Additional Stages
 commands.worldstage.usage=/worldstage <add|+|remove|rm|-|list|ls|reload> ...
 
 commands.worldstage.add.usage=/worldstage add <string stage>
