@@ -9,8 +9,15 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 import org.apache.logging.log4j.Logger;
+
+import io.bluebeaker.worldstages.network.WorldStagesMessage;
+import io.bluebeaker.worldstages.network.WorldStagesPacketHandler;
+import io.bluebeaker.worldstages.network.WorldStagesMessage.WorldStagesMessageHandler;
 
 @Mod(modid = WorldStagesMod.MODID, name = WorldStagesMod.NAME, version = WorldStagesMod.VERSION)
 public class WorldStagesMod {
@@ -31,23 +38,37 @@ public class WorldStagesMod {
     }
 
     @SubscribeEvent
-    public void onConfigChangedEvent(OnConfigChangedEvent event)
-    {
-        if (event.getModID().equals(MODID))
-        {
+    public void Init(ClientConnectedToServerEvent event) {
+        WorldStagesPacketHandler.INSTANCE.registerMessage(WorldStagesMessageHandler.class, WorldStagesMessage.class, 0,
+                Side.CLIENT);
+    }
+
+    @SubscribeEvent
+    public void onConfigChangedEvent(OnConfigChangedEvent event) {
+        if (event.getModID().equals(MODID)) {
             ConfigManager.sync(MODID, Type.INSTANCE);
             ConfigStorage.instance.load();
         }
     }
 
     @EventHandler
-    public void onServerStarted(FMLServerStartingEvent event)
-    {
+    public void onServerStarted(FMLServerStartingEvent event) {
         ConfigStorage.instance.load();
         event.registerServerCommand(new WorldStagesCommand());
     }
-    
+
+    @EventHandler
+    public void onClientJoinServer(PlayerLoggedInEvent event) {
+        if (event.player.world.isRemote)
+            return;
+        ((WorldStagesSavedData) WorldStagesSavedData.get(event.player.world)).notifyPlayer(event.player);
+    }
+
     public static void logInfo(String message) {
         logger.info(message);
+    }
+
+    public static void logError(String message) {
+        logger.error(message);
     }
 }

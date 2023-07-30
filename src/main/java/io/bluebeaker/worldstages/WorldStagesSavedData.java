@@ -2,6 +2,11 @@ package io.bluebeaker.worldstages;
 
 import java.util.HashSet;
 
+import io.bluebeaker.IWorldStagesStorage;
+import io.bluebeaker.worldstages.network.WorldStagesMessage;
+import io.bluebeaker.worldstages.network.WorldStagesPacketHandler;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -9,15 +14,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
 
-public class WorldStagesWorldSavedData extends WorldSavedData {
+public class WorldStagesSavedData extends WorldSavedData implements IWorldStagesStorage{
     private static final String DATA_NAME = WorldStagesMod.MODID + "_active_stages";
     public HashSet<String> stages = new HashSet<String>();
 
-    public WorldStagesWorldSavedData() {
+    public WorldStagesSavedData() {
         super(DATA_NAME);
     }
 
-    public WorldStagesWorldSavedData(String s) {
+    public WorldStagesSavedData(String s) {
         super(s);
     }
 
@@ -51,24 +56,33 @@ public class WorldStagesWorldSavedData extends WorldSavedData {
         return compound;
     }
 
-    public static WorldStagesWorldSavedData get(World world) {
+    public static IWorldStagesStorage get(World world) {
+        if(world.isRemote){return ClientWorldStages.instance;}
         MapStorage storage = world.getMapStorage();
         if(storage==null){return null;}
-        WorldStagesWorldSavedData instance = (WorldStagesWorldSavedData) storage.getOrLoadData(WorldStagesWorldSavedData.class,
+        WorldStagesSavedData instance = (WorldStagesSavedData) storage.getOrLoadData(WorldStagesSavedData.class,
                 DATA_NAME);
         if (instance == null) {
-            instance = new WorldStagesWorldSavedData();
+            instance = new WorldStagesSavedData();
             storage.setData(DATA_NAME, instance);
         }
         return instance;
     }
-
     public void addStage(String stage){
         stages.add(stage);
         this.markDirty();
+        WorldStagesPacketHandler.INSTANCE.sendToAll(new WorldStagesMessage(stages));
     }
     public void removeStage(String stage){
         stages.remove(stage);
         this.markDirty();
+        WorldStagesPacketHandler.INSTANCE.sendToAll(new WorldStagesMessage(stages));
+    }
+    public void notifyPlayer(EntityPlayer player){
+        WorldStagesPacketHandler.INSTANCE.sendTo(new WorldStagesMessage(stages),(EntityPlayerMP)player);
+    }
+    @Override
+    public HashSet<String> getStages() {
+        return this.stages;
     }
 }

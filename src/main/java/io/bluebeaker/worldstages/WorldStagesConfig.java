@@ -11,6 +11,10 @@ public class WorldStagesConfig {
     @LangKey("config.stagedBlocks.name")
     public static String[] stagedBlocks = new String[0];
 
+    @Comment("Blocks that has click interaction staged, and their stages.\nFormat: modid:blockid=stage_name")
+    @LangKey("config.stagedBlockInteractions.name")
+    public static String[] stagedBlockInteractions = new String[0];
+
     @Comment("Staged TileEntities and their stages.\nFormat: modid:tileentity_id=stage_name")
     @LangKey("config.stagedTileentities.name")
     public static String[] stagedTileEntities = new String[0];

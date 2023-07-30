@@ -15,7 +15,7 @@ public class StageChecker {
     public static final StageChecker instance = new StageChecker();
     public static HashSet<String> stages = new HashSet<String>();
     public boolean checkStageActive(World world,String stage){
-        return stage==null || WorldStagesWorldSavedData.get(world).stages.contains(stage);
+        return stage==null || WorldStagesSavedData.get(world).getStages().contains(stage);
     }
     public boolean checkModDisabled(World world,String modid){
         return !checkStageActive(world, ConfigStorage.instance.ModStages.get(modid));
@@ -36,10 +36,21 @@ public class StageChecker {
     public boolean checkBlockDisabled(World world,BlockPos pos){
         return checkBlockStateDisabled(world, world.getBlockState(pos));
     }
+
     public boolean checkTileEntityDisabled(World world,@Nullable ResourceLocation TileEntityID){
         return checkModDisabled(world, TileEntityID)||!checkStageActive(world,ConfigStorage.instance.TileEntityStages.get(String.valueOf(TileEntityID)));
     }
     public boolean checkTileEntityDisabled(World world,TileEntity tileEntity){
         return checkTileEntityDisabled(world, TileEntity.getKey(tileEntity.getClass()));
+    }
+
+    public boolean checkBlockInteractionDisabled(World world,@Nullable ResourceLocation BlockID){
+        return !checkStageActive(world,ConfigStorage.instance.BlockInteractionStages.get(String.valueOf(BlockID)));
+    }
+    public boolean checkBlockInteractionDisabled(World world,Block block){
+        return checkBlockInteractionDisabled(world, block.getRegistryName());
+    }
+    public boolean checkBlockInteractionDisabled(World world,BlockPos pos){
+        return checkBlockInteractionDisabled(world,world.getBlockState(pos).getBlock());
     }
 }

@@ -54,7 +54,7 @@ public class WorldStagesCommand extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length >= 1) {
-                WorldStagesWorldSavedData data = WorldStagesWorldSavedData.get(server.getWorld(0));
+                WorldStagesSavedData data = (WorldStagesSavedData)WorldStagesSavedData.get(server.getWorld(0));
                 String value = args[0];
                 if (!data.isStageActive(value)) {
                     data.addStage(value);
@@ -71,7 +71,7 @@ public class WorldStagesCommand extends CommandTreeBase {
         public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
                 @Nullable BlockPos targetPos) {
             List<String> list= new ArrayList<String>(ConfigStorage.instance.RegisteredStages);
-            list.removeAll(WorldStagesWorldSavedData.get(server.getWorld(0)).stages);
+            list.removeAll(WorldStagesSavedData.get(server.getWorld(0)).getStages());
             return list;
         }
         @Override
@@ -95,7 +95,7 @@ public class WorldStagesCommand extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length >= 1) {
-                WorldStagesWorldSavedData data = WorldStagesWorldSavedData.get(server.getWorld(0));
+                WorldStagesSavedData data = (WorldStagesSavedData)WorldStagesSavedData.get(server.getWorld(0));
                 String value = args[0];
                 if (data.isStageActive(value)) {
                     data.removeStage(value);
@@ -111,7 +111,7 @@ public class WorldStagesCommand extends CommandTreeBase {
         @Override
         public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
                 @Nullable BlockPos targetPos) {
-            return new ArrayList<String>(WorldStagesWorldSavedData.get(server.getWorld(0)).stages);
+            return new ArrayList<String>(WorldStagesSavedData.get(server.getWorld(0)).getStages());
         }
 
         @Override
@@ -134,7 +134,7 @@ public class WorldStagesCommand extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
             if (args.length == 0) {
-                WorldStagesWorldSavedData data = WorldStagesWorldSavedData.get(server.getWorld(0));
+                WorldStagesSavedData data = (WorldStagesSavedData)WorldStagesSavedData.get(server.getWorld(0));
                 sender.sendMessage(new TextComponentTranslation("commands.worldstage.list.result",
                         data.stages.toString(), ConfigStorage.instance.RegisteredStages.toString()));
             } else {
