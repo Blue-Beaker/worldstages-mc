@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.common.MinecraftForge;
 
 public class WorldStagesSavedData extends WorldSavedData implements IWorldStagesStorage{
     private static final String DATA_NAME = WorldStagesMod.MODID + "_active_stages";
@@ -72,11 +73,13 @@ public class WorldStagesSavedData extends WorldSavedData implements IWorldStages
         stages.add(stage);
         this.markDirty();
         WorldStagesPacketHandler.INSTANCE.sendToAll(new WorldStagesMessage(stages));
+        MinecraftForge.EVENT_BUS.post(new WorldStageEvent.Add(stages,stage));
     }
     public void removeStage(String stage){
         stages.remove(stage);
         this.markDirty();
         WorldStagesPacketHandler.INSTANCE.sendToAll(new WorldStagesMessage(stages));
+        MinecraftForge.EVENT_BUS.post(new WorldStageEvent.Remove(stages,stage));
     }
     public void notifyPlayer(EntityPlayer player){
         WorldStagesPacketHandler.INSTANCE.sendTo(new WorldStagesMessage(stages),(EntityPlayerMP)player);

@@ -55,6 +55,7 @@ public class WorldStagesMod {
     public void onServerStarted(FMLServerStartingEvent event) {
         ConfigStorage.instance.load();
         event.registerServerCommand(new WorldStagesCommand());
+        MinecraftForge.EVENT_BUS.post(new WorldStageEvent(WorldStagesSavedData.get(event.getServer().getWorld(0)).getStages()));
     }
 
     @EventHandler
