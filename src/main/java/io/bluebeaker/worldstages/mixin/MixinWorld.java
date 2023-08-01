@@ -38,7 +38,7 @@ public abstract class MixinWorld {
         }
         for(TileEntity te:tileEntitiesToRemove){
             ((World)(Object)this).tickableTileEntities.remove(te);
-            WorldStagesMod.logInfo(String.valueOf(TileEntity.getKey(te.getClass())));
+            // WorldStagesMod.logInfo(String.valueOf(TileEntity.getKey(te.getClass())));
         }
     }
     //Prevents activating disabled blocks
@@ -61,7 +61,7 @@ public abstract class MixinWorld {
         if(!WorldStagesConfig.blockConfig.disableUpdates) return;
         ResourceLocation id= block.getRegistryName();
         if(id!=null && StageChecker.instance.checkBlockDisabled(((World)(Object)this),id)){
-            WorldStagesMod.logInfo(id.toString());
+            // WorldStagesMod.logInfo(id.toString());
         }else{
             block.updateTick(world, pos, state, random);
         }

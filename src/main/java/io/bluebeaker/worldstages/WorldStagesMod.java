@@ -30,6 +30,7 @@ public class WorldStagesMod {
     public WorldStagesMod() {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(BlockEvents.class);
+        MinecraftForge.EVENT_BUS.register(StageChecker.instance);
     }
 
     @EventHandler

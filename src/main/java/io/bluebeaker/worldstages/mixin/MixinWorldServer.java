@@ -24,7 +24,7 @@ public class MixinWorldServer {
         if(!WorldStagesConfig.blockConfig.disableUpdates) return;
         ResourceLocation id= block.getRegistryName();
         if(id!=null && StageChecker.instance.checkBlockDisabled(world,id)){
-            WorldStagesMod.logInfo(id.toString());
+            // WorldStagesMod.logInfo(id.toString());
         }else{
             block.updateTick(world, pos, state, random);
         }
@@ -34,7 +34,7 @@ public class MixinWorldServer {
         if(!WorldStagesConfig.blockConfig.disableUpdates) return;
         ResourceLocation id= block.getRegistryName();
         if(id!=null && StageChecker.instance.checkBlockDisabled(world,id)){
-            WorldStagesMod.logInfo(id.toString());
+            // WorldStagesMod.logInfo(id.toString());
         }else{
             block.updateTick(world, pos, state, random);
         }
