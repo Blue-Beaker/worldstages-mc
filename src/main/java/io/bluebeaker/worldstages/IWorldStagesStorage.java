@@ -1,4 +1,4 @@
-package io.bluebeaker;
+package io.bluebeaker.worldstages;
 
 import java.util.HashSet;
 

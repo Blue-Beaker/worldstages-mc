@@ -2,7 +2,7 @@ package io.bluebeaker.worldstages;
 
 import java.util.HashSet;
 
-import io.bluebeaker.IWorldStagesStorage;
+import io.bluebeaker.worldstages.IWorldStagesStorage;
 import io.bluebeaker.worldstages.network.WorldStagesMessage;
 import io.bluebeaker.worldstages.network.WorldStagesPacketHandler;
 import net.minecraft.entity.player.EntityPlayer;

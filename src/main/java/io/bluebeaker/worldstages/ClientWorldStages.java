@@ -2,7 +2,7 @@ package io.bluebeaker.worldstages;
 
 import java.util.HashSet;
 
-import io.bluebeaker.IWorldStagesStorage;
+import io.bluebeaker.worldstages.IWorldStagesStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)

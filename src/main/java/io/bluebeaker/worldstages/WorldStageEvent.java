@@ -5,8 +5,8 @@ import java.util.HashSet;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class WorldStageEvent extends Event{
-    HashSet<String> stages;
-    String laststage;
+    public HashSet<String> stages;
+    public String laststage;
     public WorldStageEvent(){
         super();
     }
