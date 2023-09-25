@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.util.HashSet;
 
 import io.bluebeaker.worldstages.ClientWorldStages;
+import io.bluebeaker.worldstages.WorldStageEvent;
 import io.bluebeaker.worldstages.WorldStagesMod;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -53,13 +56,12 @@ public class WorldStagesMessage implements IMessage {
         }
     }
 
-    @SideOnly(Side.CLIENT)
     public static class WorldStagesMessageHandler implements IMessageHandler<WorldStagesMessage, IMessage> {
         // Do note that the default constructor is required, but implicitly defined in
         // this case
         public WorldStagesMessageHandler() {
         }
-
+        @SideOnly(Side.CLIENT)
         @Override
         public IMessage onMessage(WorldStagesMessage message, MessageContext ctx) {
             // This is the player the packet was sent to the server from
@@ -72,6 +74,7 @@ public class WorldStagesMessage implements IMessage {
                     }
                 }
                 ClientWorldStages.instance.stages = stages;
+                MinecraftForge.EVENT_BUS.post(new WorldStageEvent(Minecraft.getMinecraft().world,stages));
             }
             return null;
         }

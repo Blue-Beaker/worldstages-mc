@@ -2,7 +2,6 @@ package io.bluebeaker.worldstages;
 
 import java.util.HashSet;
 
-import io.bluebeaker.worldstages.IWorldStagesStorage;
 import io.bluebeaker.worldstages.network.WorldStagesMessage;
 import io.bluebeaker.worldstages.network.WorldStagesPacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,11 +13,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.MinecraftForge;
-
 public class WorldStagesSavedData extends WorldSavedData implements IWorldStagesStorage{
     private static final String DATA_NAME = WorldStagesMod.MODID + "_active_stages";
     public HashSet<String> stages = new HashSet<String>();
-
+    public World world;
     public WorldStagesSavedData() {
         super(DATA_NAME);
     }
@@ -67,19 +65,20 @@ public class WorldStagesSavedData extends WorldSavedData implements IWorldStages
             instance = new WorldStagesSavedData();
             storage.setData(DATA_NAME, instance);
         }
+        instance.world=world;
         return instance;
     }
     public void addStage(String stage){
         stages.add(stage);
         this.markDirty();
         WorldStagesPacketHandler.INSTANCE.sendToAll(new WorldStagesMessage(stages));
-        MinecraftForge.EVENT_BUS.post(new WorldStageEvent.Add(stages,stage));
+        MinecraftForge.EVENT_BUS.post(new WorldStageEvent.Add(world,stages,stage));
     }
     public void removeStage(String stage){
         stages.remove(stage);
         this.markDirty();
         WorldStagesPacketHandler.INSTANCE.sendToAll(new WorldStagesMessage(stages));
-        MinecraftForge.EVENT_BUS.post(new WorldStageEvent.Remove(stages,stage));
+        MinecraftForge.EVENT_BUS.post(new WorldStageEvent.Remove(world,stages,stage));
     }
     public void notifyPlayer(EntityPlayer player){
         WorldStagesPacketHandler.INSTANCE.sendTo(new WorldStagesMessage(stages),(EntityPlayerMP)player);

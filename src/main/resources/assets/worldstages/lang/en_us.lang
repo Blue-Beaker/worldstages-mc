@@ -1,8 +1,8 @@
-config.stagedTileentities.name=Staged TileEntities
-config.stagedBlocks.name=Staged Blocks
-config.stagedBlockInteractions.name=Staged Interactable Blocks
-config.stagedMods.name=Staged Mods
-config.additionalStages.name=Additional Stages
+config.worldstage.stagedTileentities.name=Staged TileEntities
+config.worldstage.stagedBlocks.name=Staged Blocks
+config.worldstage.stagedBlockInteractions.name=Staged Interactable Blocks
+config.worldstage.stagedMods.name=Staged Mods
+config.worldstage.additionalStages.name=Additional Stages
 commands.worldstage.usage=/worldstage <add|+|remove|rm|-|list|ls|reload> ...
 
 commands.worldstage.add.usage=/worldstage add <string stage>
@@ -14,17 +14,17 @@ commands.worldstage.remove.error.notfound=Cannot find stage '%s'
 commands.worldstage.remove.success=Removed worldstage '%s'
 
 commands.worldstage.list.usage=/worldstage list
-commands.worldstage.list.result=Active worldstages: %s, Registered worldstages: %s
+commands.worldstage.list.result=Active worldstage: %s, Registered worldstage: %s
 
 commands.worldstage.reload.usage=/worldstage reload
 commands.worldstage.reload.result=Reloaded config with %s staged blocks and %s staged tileentities
 
 message.worldstage.blockdisabled=§cThis block is disabled at this stage!§r
 
-config.disableLeftInteraction.name=Disable Left-click Interaction
-config.disableRightInteraction.name=Disable Right-click Interaction
-config.disablePlacement.name=Disable Block Placement
-config.disableEntityInteraction.name=Disable Entity Interaction
-config.disableRedstoneInteraction.name=Disable Redstone Interaction
-config.disableUpdates.name=Disable Block Updates
+config.worldstage.disableLeftInteraction.name=Disable Left-click Interaction
+config.worldstage.disableRightInteraction.name=Disable Right-click Interaction
+config.worldstage.disablePlacement.name=Disable Block Placement
+config.worldstage.disableEntityInteraction.name=Disable Entity Interaction
+config.worldstage.disableRedstoneInteraction.name=Disable Redstone Interaction
+config.worldstage.disableUpdates.name=Disable Block Updates
 category.blockconfig.name=Config for Disabled Blocks
