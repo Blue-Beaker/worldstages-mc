@@ -72,6 +72,8 @@ public class WorldStagesCommand extends CommandTreeBase {
                 @Nullable BlockPos targetPos) {
             List<String> list= new ArrayList<String>(ConfigStorage.instance.RegisteredStages);
             list.removeAll(WorldStagesSavedData.get(server.getWorld(0)).getStages());
+            if(args.length>=1)
+            list.removeIf(str -> !str.startsWith(args[args.length-1]));
             return list;
         }
         @Override
@@ -111,7 +113,10 @@ public class WorldStagesCommand extends CommandTreeBase {
         @Override
         public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
                 @Nullable BlockPos targetPos) {
-            return new ArrayList<String>(WorldStagesSavedData.get(server.getWorld(0)).getStages());
+            ArrayList<String> list = new ArrayList<String>(WorldStagesSavedData.get(server.getWorld(0)).getStages());
+            if(args.length>=1)
+            list.removeIf(str -> !str.startsWith(args[args.length-1]));
+            return list;
         }
 
         @Override
