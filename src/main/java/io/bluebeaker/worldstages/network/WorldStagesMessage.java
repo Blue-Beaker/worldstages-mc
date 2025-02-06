@@ -8,11 +8,13 @@ import io.bluebeaker.worldstages.WorldStageEvent;
 import io.bluebeaker.worldstages.WorldStagesMod;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -74,7 +76,9 @@ public class WorldStagesMessage implements IMessage {
                     }
                 }
                 ClientWorldStages.instance.stages = stages;
-                MinecraftForge.EVENT_BUS.post(new WorldStageEvent(Minecraft.getMinecraft().world,stages));
+                WorldClient world = Minecraft.getMinecraft().world;
+                if(world != null)
+                    MinecraftForge.EVENT_BUS.post(new WorldStageEvent(world,stages));
             }
             return null;
         }

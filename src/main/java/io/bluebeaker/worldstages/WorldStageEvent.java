@@ -6,14 +6,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+import javax.annotation.Nonnull;
+
 public class WorldStageEvent extends WorldEvent{
     public HashSet<String> stages;
     public String laststage;
-    public WorldStageEvent(World world){
+    public WorldStageEvent(@Nonnull World world){
         super(world);
     }
-    public WorldStageEvent(World world,HashSet<String> stages){
+    public WorldStageEvent(@Nonnull World world,HashSet<String> stages){
         super(world);
+        if(world==null){
+            throw new NullPointerException();
+        }
         this.stages=stages;
     }
     public static class Add extends WorldStageEvent{

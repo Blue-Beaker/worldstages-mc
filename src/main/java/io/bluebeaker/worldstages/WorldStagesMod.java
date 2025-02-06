@@ -11,6 +11,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEve
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -26,7 +27,7 @@ import io.bluebeaker.worldstages.network.WorldStagesMessage.WorldStagesMessageHa
 
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION)
 public class WorldStagesMod {
-    public static final String MODID = Tags.VERSION;
+    public static final String MODID = Tags.MOD_ID;
     public static final String NAME = Tags.MOD_NAME;
     public static final String VERSION = Tags.VERSION;
 
@@ -60,13 +61,16 @@ public class WorldStagesMod {
     }
 
     @EventHandler
-    public void onServerStarted(FMLServerStartingEvent event) {
+    public void onServerStarting(FMLServerStartingEvent event) {
         WorldStagesPacketHandler.INSTANCE.registerMessage(WorldStagesMessageHandler.class, WorldStagesMessage.class, 0,
                 Side.CLIENT);
         ConfigStorage.instance.load();
         event.registerServerCommand(new WorldStagesCommand());
         this.server=event.getServer();
-        MinecraftForge.EVENT_BUS.post(new WorldStageEvent(event.getServer().getWorld(0), WorldStagesSavedData.get(event.getServer().getWorld(0)).getStages()));
+    }
+    @EventHandler
+    public void onServerStarted(FMLServerStartedEvent event){
+        MinecraftForge.EVENT_BUS.post(new WorldStageEvent(this.server.getWorld(0), WorldStagesSavedData.get(this.server.getWorld(0)).getStages()));
     }
 
     @SubscribeEvent
@@ -75,6 +79,7 @@ public class WorldStagesMod {
             return;
         ((WorldStagesSavedData) WorldStagesSavedData.get(event.player.world)).notifyPlayer(event.player);
     }
+
     @SubscribeEvent
     public void onStageChanged(WorldStageEvent event){
         if(WorldStagesConfig.debug){
