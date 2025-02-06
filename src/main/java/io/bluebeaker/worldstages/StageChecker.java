@@ -64,7 +64,7 @@ public class StageChecker {
     public boolean checkModDisabled(World world, @Nullable ResourceLocation resourceLocation) {
         if (resourceLocation == null)
             return false;
-        return checkModDisabled(world, resourceLocation.getResourceDomain());
+        return checkModDisabled(world, resourceLocation.getNamespace());
     }
 
     /**

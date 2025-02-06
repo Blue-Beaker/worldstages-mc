@@ -24,11 +24,11 @@ import io.bluebeaker.worldstages.network.WorldStagesMessage;
 import io.bluebeaker.worldstages.network.WorldStagesPacketHandler;
 import io.bluebeaker.worldstages.network.WorldStagesMessage.WorldStagesMessageHandler;
 
-@Mod(modid = WorldStagesMod.MODID, name = WorldStagesMod.NAME, version = WorldStagesMod.VERSION)
+@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION)
 public class WorldStagesMod {
-    public static final String MODID = "worldstages";
-    public static final String NAME = "World Stages";
-    public static final String VERSION = "1.0";
+    public static final String MODID = Tags.VERSION;
+    public static final String NAME = Tags.MOD_NAME;
+    public static final String VERSION = Tags.VERSION;
 
     private static Logger logger;
 
@@ -69,7 +69,7 @@ public class WorldStagesMod {
         MinecraftForge.EVENT_BUS.post(new WorldStageEvent(event.getServer().getWorld(0), WorldStagesSavedData.get(event.getServer().getWorld(0)).getStages()));
     }
 
-    @EventHandler
+    @SubscribeEvent
     public void onClientJoinServer(PlayerLoggedInEvent event) {
         if (event.player.world.isRemote)
             return;
@@ -101,5 +101,8 @@ public class WorldStagesMod {
 
     public static void logError(String message) {
         logger.error(message);
+    }
+    public static Logger getLogger(){
+        return logger;
     }
 }

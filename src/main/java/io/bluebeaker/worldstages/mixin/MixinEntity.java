@@ -16,10 +16,10 @@ import net.minecraft.world.World;
 
 @Mixin(Entity.class)
 public class MixinEntity {
-    @Redirect(method = "doBlockCollisions()V",at=@At(value = "INVOKE",target = "Lnet/minecraft/block/Block;onEntityCollidedWithBlock(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/entity/Entity;)V"))
-    public void onEntityCollidedWithBlock(Block block,World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+    @Redirect(method = "doBlockCollisions()V",at=@At(value = "INVOKE",target = "Lnet/minecraft/block/Block;onEntityCollision(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/entity/Entity;)V"))
+    public void onEntityCollision(Block block,World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
         if(WorldStagesConfig.blockConfig.disableEntityInteraction&& !StageChecker.instance.checkBlockDisabled(worldIn, pos)){
-            block.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
+            block.onEntityCollision(worldIn, pos, state, entityIn);
         }
     }
     @Redirect(method = "updateFallState",at=@At(value = "INVOKE",target = "Lnet/minecraft/block/Block;onFallenUpon(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;F)V"))

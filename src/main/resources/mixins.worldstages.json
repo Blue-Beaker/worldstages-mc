@@ -1,19 +1,15 @@
 {
-    "required": true,
-    "compatibilityLevel": "JAVA_8",
-    "package": "io.bluebeaker.worldstages.mixin",
-    "mixins": [
-      "MixinPistonBase",
-      "MixinWorld",
-      "MixinEntity",
-      "MixinWorldServer"
-    ],
-    "client": [
-    ],
-    "server": [
-    ],
-    "injectors": {
-      "defaultRequire": 1
-    },
-    "refmap": "mixins.worldstages.refmap.json"
-  }
+	"package": "io.bluebeaker.worldstages.mixin",
+	"required": true,
+	"refmap": "${mixin_refmap}",
+	"target": "@env(DEFAULT)",
+	"minVersion": "0.8.5",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"MixinPistonBase",
+		"MixinWorld",
+		"MixinEntity",
+		"MixinWorldServer"],
+	"server": [],
+	"client": []
+}
