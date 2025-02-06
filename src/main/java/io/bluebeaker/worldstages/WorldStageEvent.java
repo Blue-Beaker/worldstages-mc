@@ -1,12 +1,10 @@
 package io.bluebeaker.worldstages;
 
-import java.util.HashSet;
-
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
+import java.util.HashSet;
 
 public class WorldStageEvent extends WorldEvent{
     public HashSet<String> stages;
@@ -16,9 +14,9 @@ public class WorldStageEvent extends WorldEvent{
     }
     public WorldStageEvent(@Nonnull World world,HashSet<String> stages){
         super(world);
-        if(world==null){
-            throw new NullPointerException();
-        }
+//        if(world==null){
+//            throw new NullPointerException();
+//        }
         this.stages=stages;
     }
     public static class Add extends WorldStageEvent{

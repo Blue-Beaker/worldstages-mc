@@ -1,21 +1,18 @@
 package io.bluebeaker.worldstages.mixin;
 
-import java.util.Random;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import io.bluebeaker.worldstages.StageChecker;
 import io.bluebeaker.worldstages.WorldStagesConfig;
-import io.bluebeaker.worldstages.WorldStagesMod;
-
-import org.spongepowered.asm.mixin.injection.At;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
+
+import java.util.Random;
 
 @Mixin(WorldServer.class)
 public class MixinWorldServer {

@@ -1,23 +1,22 @@
 package io.bluebeaker.worldstages;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class ConfigStorage {
 
-    public HashMap<String,String> TileEntityStages = new HashMap<String,String>(64);
-    public HashMap<String,String> BlockStages = new HashMap<String,String>(64);
-    public HashMap<String,String> BlockInteractionStages = new HashMap<String,String>(64);
-    public HashMap<String,String> ModStages = new HashMap<String,String>(64);
-    public HashSet<String> RegisteredStages = new HashSet<String>(16);
+    public HashMap<String,String> TileEntityStages = new HashMap<String,String>();
+    public HashMap<String,String> BlockStages = new HashMap<String,String>();
+    public HashMap<String,String> BlockInteractionStages = new HashMap<String,String>();
+    public HashMap<String,String> ModStages = new HashMap<String,String>();
+    public HashSet<String> RegisteredStages = new HashSet<String>();
     public static final ConfigStorage instance = new ConfigStorage();
 
     public void load(){
         RegisteredStages.clear();
-        
-        for(String item:WorldStagesConfig.additionalStages){
-            RegisteredStages.add(item);
-        }
+
+        Collections.addAll(RegisteredStages, WorldStagesConfig.additionalStages);
 
         BlockStages.clear();
         for(String item:WorldStagesConfig.stagedBlocks){
