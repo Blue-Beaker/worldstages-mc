@@ -1,0 +1,9 @@
+### 1.0
+Initial release  
+### 1.1
+Tweaked tab-completion for /worldstages command  
+### 1.1.1
+Migrated to use cleanroom's template, and uses MixinBooter.  
+### 1.1.2
+Fixed a potential memory leak caused by reference to world in saved data  
+Changed remote version requirement  
