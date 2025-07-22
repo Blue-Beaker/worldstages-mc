@@ -6,4 +6,4 @@ Tweaked tab-completion for /worldstages command
 Migrated to use cleanroom's template, and uses MixinBooter.  
 ### 1.1.2
 Fixed a potential memory leak caused by reference to world in saved data  
-Changed remote version requirement  
+Changed remote version requirement to [1.0,1.2)  
