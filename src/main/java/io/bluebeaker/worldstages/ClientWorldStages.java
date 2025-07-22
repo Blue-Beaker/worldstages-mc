@@ -8,6 +8,9 @@ import java.util.HashSet;
 public class ClientWorldStages implements IWorldStagesStorage {
     public HashSet<String> stages = new HashSet<String>();
     private static final ClientWorldStages instance = new ClientWorldStages();
+    public static void clear(){
+        get().stages.clear();
+    }
     public static ClientWorldStages get(){
         return instance;
     }
