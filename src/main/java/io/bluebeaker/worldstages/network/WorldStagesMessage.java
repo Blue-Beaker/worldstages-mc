@@ -71,7 +71,7 @@ public class WorldStagesMessage implements IMessage {
                         stages.add(((NBTTagString) (nbt)).getString());
                     }
                 }
-                ClientWorldStages.instance.stages = stages;
+                ClientWorldStages.get().stages = stages;
                 WorldClient world = Minecraft.getMinecraft().world;
                 if(world != null)
                     MinecraftForge.EVENT_BUS.post(new WorldStageEvent(world,stages));

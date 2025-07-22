@@ -1,29 +1,28 @@
 package io.bluebeaker.worldstages;
 
+import io.bluebeaker.worldstages.network.WorldStagesMessage;
+import io.bluebeaker.worldstages.network.WorldStagesMessage.WorldStagesMessageHandler;
+import io.bluebeaker.worldstages.network.WorldStagesPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Config.Type;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.apache.logging.log4j.Logger;
-
-import io.bluebeaker.worldstages.network.WorldStagesMessage;
-import io.bluebeaker.worldstages.network.WorldStagesPacketHandler;
-import io.bluebeaker.worldstages.network.WorldStagesMessage.WorldStagesMessageHandler;
 
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION)
 public class WorldStagesMod {
@@ -71,6 +70,10 @@ public class WorldStagesMod {
     @EventHandler
     public void onServerStarted(FMLServerStartedEvent event){
         MinecraftForge.EVENT_BUS.post(new WorldStageEvent(this.server.getWorld(0), WorldStagesSavedData.get(this.server.getWorld(0)).getStages()));
+    }
+    @EventHandler
+    public void onServerStopping(FMLServerStoppingEvent event){
+        ((WorldStagesSavedData)WorldStagesSavedData.get(this.server.getWorld(0))).clean();
     }
 
     @SubscribeEvent

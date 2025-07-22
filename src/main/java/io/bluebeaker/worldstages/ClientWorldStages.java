@@ -1,14 +1,13 @@
 package io.bluebeaker.worldstages;
 
-import java.util.HashSet;
-
-import io.bluebeaker.worldstages.IWorldStagesStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.HashSet;
 @SideOnly(Side.CLIENT)
 public class ClientWorldStages implements IWorldStagesStorage {
     public HashSet<String> stages = new HashSet<String>();
-    public static ClientWorldStages instance = new ClientWorldStages();
+    private static final ClientWorldStages instance = new ClientWorldStages();
     public static ClientWorldStages get(){
         return instance;
     }
