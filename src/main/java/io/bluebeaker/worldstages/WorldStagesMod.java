@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.common.config.ConfigManager;
@@ -24,6 +25,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
+
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION)
 public class WorldStagesMod {
     public static final String MODID = Tags.MOD_ID;
@@ -33,11 +36,17 @@ public class WorldStagesMod {
     private static Logger logger;
 
     private MinecraftServer server;
+    private static @Nullable World currentWorld;
 
     public WorldStagesMod() {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(BlockEvents.class);
         MinecraftForge.EVENT_BUS.register(StageChecker.instance);
+    }
+
+    @Nullable
+    public static World getCurrentWorld() {
+        return currentWorld;
     }
 
     @EventHandler
@@ -67,13 +76,14 @@ public class WorldStagesMod {
         event.registerServerCommand(new WorldStagesCommand());
         this.server=event.getServer();
     }
+
     @EventHandler
     public void onServerStarted(FMLServerStartedEvent event){
-        MinecraftForge.EVENT_BUS.post(new WorldStageEvent(this.server.getWorld(0), WorldStagesSavedData.get(this.server.getWorld(0)).getStages()));
+        currentWorld=this.server.getWorld(0);
     }
     @EventHandler
     public void onServerStopping(FMLServerStoppingEvent event){
-        ((WorldStagesSavedData)WorldStagesSavedData.get(this.server.getWorld(0))).clean();
+        currentWorld=null;
     }
 
     @SubscribeEvent

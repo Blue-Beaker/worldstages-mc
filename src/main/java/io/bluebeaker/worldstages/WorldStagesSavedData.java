@@ -12,14 +12,11 @@ import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.MinecraftForge;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 
 public class WorldStagesSavedData extends WorldSavedData implements IWorldStagesStorage{
     private static final String DATA_NAME = WorldStagesMod.MODID + "_active_stages";
     public HashSet<String> stages = new HashSet<String>();
-    @Nullable
-    protected World world;
     public WorldStagesSavedData() {
         super(DATA_NAME);
     }
@@ -67,14 +64,15 @@ public class WorldStagesSavedData extends WorldSavedData implements IWorldStages
         if (instance == null) {
             instance = new WorldStagesSavedData();
             storage.setData(DATA_NAME, instance);
+            WorldStagesMod.getLogger().info("Creating WorldStagesSavedData "+Integer.toHexString(instance.hashCode())+" for "+Integer.toHexString(world.hashCode()));
         }
-        instance.world=world;
         return instance;
     }
     public void addStage(String stage){
         stages.add(stage);
         this.markDirty();
         WorldStagesPacketHandler.INSTANCE.sendToAll(new WorldStagesMessage(stages));
+        World world = WorldStagesMod.getCurrentWorld();
         if(world!=null)
             MinecraftForge.EVENT_BUS.post(new WorldStageEvent.Add(world,stages,stage));
     }
@@ -82,6 +80,7 @@ public class WorldStagesSavedData extends WorldSavedData implements IWorldStages
         stages.remove(stage);
         this.markDirty();
         WorldStagesPacketHandler.INSTANCE.sendToAll(new WorldStagesMessage(stages));
+        World world = WorldStagesMod.getCurrentWorld();
         if(world!=null)
             MinecraftForge.EVENT_BUS.post(new WorldStageEvent.Remove(world,stages,stage));
     }
@@ -89,12 +88,6 @@ public class WorldStagesSavedData extends WorldSavedData implements IWorldStages
         WorldStagesPacketHandler.INSTANCE.sendTo(new WorldStagesMessage(stages),(EntityPlayerMP)player);
     }
 
-    /**
-     * Removes circular reference of world when shutting down the server.
-     */
-    public void clean(){
-        this.world=null;
-    }
     @Override
     public HashSet<String> getStages() {
         return this.stages;
