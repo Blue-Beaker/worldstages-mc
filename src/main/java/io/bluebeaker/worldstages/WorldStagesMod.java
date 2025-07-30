@@ -84,6 +84,7 @@ public class WorldStagesMod {
     @EventHandler
     public void onServerStarted(FMLServerStartedEvent event){
         currentWorld=this.server.getWorld(0);
+        MinecraftForge.EVENT_BUS.post(new WorldStageEvent(currentWorld,WorldStagesSavedData.get(currentWorld).getStages()));
     }
     @EventHandler
     public void onServerStopping(FMLServerStoppingEvent event){
